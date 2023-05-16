@@ -10,7 +10,7 @@
 <body>
 
     <header>
-        <img class="logo" src="logo.png" alt="Girl in a jacket" width="200" height="200">
+        <img class="logo" src="logo.png" alt="Logo" width="200" height="200">
 
         <div class="dropdown">
             <button onclick="myFunction()" class="dropbtn">Ticker</button>
@@ -34,6 +34,7 @@
         const ctx = document.getElementById('myChart');
       
         new Chart(ctx, {
+          
           type: 'line',
           data: {
             labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
