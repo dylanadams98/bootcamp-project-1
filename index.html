@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
+    <title>Document</title>
+</head>
+<body>
+
+    <header>
+        <img class="logo" src="logo.png" alt="Girl in a jacket" width="200" height="200">
+
+        <div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn">Ticker</button>
+            <div id="myDropdown" class="dropdown-content">
+              <a href="#">Link 1</a>
+              <a href="#">Link 2</a>
+              <a href="#">Link 3</a>
+            </div>
+          </div>
+
+      </header>
+
+      <div>
+        <canvas id="myChart"></canvas>
+      </div>
+      
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      
+      <script>
+       
+        const ctx = document.getElementById('myChart');
+      
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+              label: '# of Votes',
+              data: [12, 19, 3, 5, 2, 3],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+            
+          }
+          
+        });
+      </script>
+
+      <aside class="news">
+<div>
+  <h1>News 1</h1>
+  <h1>News 2</h1>
+  <h1>News 3</h1>
+</div>
+
+
+      </aside>
+       
+    
+</body>
+<script src="/polygon.js"></script>
+<script src="https://polygon.io/client-js"></script>
+</html>
