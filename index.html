@@ -1,73 +1,126 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
+  <title>StockWizard - Stock Market News</title>
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
-    <title>Document</title>
 </head>
+
 <body>
+  <header>
+    <div class="header-section">
+      <img class="header-logo" src="logo.png" width="150px" height="150px">
+    </div>
+    <div class="header-section">
+      <label for="stock-input">Stock Name:</label>
+      <input type="text" id="stock-input" placeholder="Enter stock name...">
+    </div>
+    <div class="header-section">
+      <label for="start-date-input">Start Date:</label>
+      <input type="date" id="start-date-input">
+    </div>
+    <div class="header-section">
+      <label for="end-date-input">End Date:</label>
+      <input type="date" id="end-date-input">
+      <button id="search-button">Search</button>
+    </div>
+  </header>
+  <section class="main">
 
-    <header>
-        <img class="logo" src="logo.png" alt="Logo" width="200" height="200">
+    <section id="history-container">
+      <div class="news-article">
+        <h2>Ticker History</h2>
+        <div class="news-box">
+          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
+        </div>
+        <div class="news-box">
+          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
+        </div>
+        <div class="news-box">
+          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
+        </div>
 
-        <div class="dropdown">
-            <button onclick="myFunction()" class="dropbtn">Ticker</button>
-            <div id="myDropdown" class="dropdown-content">
-              <a href="#">Link 1</a>
-              <a href="#">Link 2</a>
-              <a href="#">Link 3</a>
-            </div>
-          </div>
+      </div>
+    </section>
 
-      </header>
+    <section id="chart-container">
 
       <div>
         <canvas id="myChart"></canvas>
       </div>
-      
+
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-      
+
       <script>
-       
+
         const ctx = document.getElementById('myChart');
-      
+
         new Chart(ctx, {
-          
+
           type: 'line',
           data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Gold'],
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
             datasets: [{
-              label: '# of Votes',
-              data: [12, 19, 3, 5, 2, 3],
-              borderWidth: 1
+              label: 'close',
+              data: [12, 19, 3, 5, 10, 3],
+              borderWidth: 4,
+            },
+            {
+              label: 'open',
+              data: [30, 20, 4, 9, 20, 34],
+              borderWidth: 4,
             }]
           },
           options: {
             scales: {
               y: {
-                beginAtZero: true
+                beginAtZero: false
               }
             }
-            
           }
-          
         });
       </script>
 
-      <aside class="news">
-<div>
-  <h1>News 1</h1>
-  <h1>News 2</h1>
-  <h1>News 3</h1>
-</div>
+    </section>
+    <section id="news-container">
+      <div class="news-article">
+        <h2>Ticker News</h2>
+        <div class="news-box">
+          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
+        </div>
+        <div class="news-box">
+          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
+        </div>
+        <div class="news-box">
+          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
+        </div>
 
+      </div>
+    </section>
 
-      </aside>
-       
-    
+    <section id="news-container">
+      <div class="news-article">
+        <h2>Ticker News</h2>
+        <div class="news-box">
+          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
+        </div>
+        <div class="news-box">
+          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
+        </div>
+        <div class="news-box">
+          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
+        </div>
+
+      </div>
+    </section>
+
+  </section>
+  <footer>
+    <p>&copy; 2023 StockWizard</p>
+  </footer>
 </body>
-<script src="/polygon.js"></script>
-<script src="https://polygon.io/client-js"></script>
+
 </html>

@@ -1,112 +1,143 @@
-/* Root styles to ensure easily adjustable and modular site */
-
 :root {
-    --dark: #232323;
-    --light: #d0d0d0;
-    --mid: #8F5C38;
-  }
-  
-  /* Ensures all jumpto navigation uses a smooth scroll */
-  
-  html {
-    scroll-behavior: smooth;
-  }
-  
-  header {
-    background: var(--light);
-    text-align: center;
-
-  }
-
-  .logo {
-    margin-left: 20px;
-    margin-top: -10px;
-  }
-
-  /* Dropdown Button */
-.dropbtn {
-    background-color: #8A6FC4;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    margin: 10px;
-    margin-top: -8px;
-  }
-  
-  /* Dropdown button on hover & focus */
-  .dropbtn:hover, .dropbtn:focus {
-    background-color: #4C5CA2;
-  }
-  
-  /* The container <div> - needed to position the dropdown content */
-  .dropdown {
-    position: relative;
-
-  }
-  
-  /* Dropdown Content (Hidden by Default) */
-  .dropdown-content {
-    display: none;
-    position: relative;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-  /* Links inside the dropdown */
-  .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-  
-  /* Change color of dropdown links on hover */
-  .dropdown-content a:hover {background-color: #ddd;}
-  
-  /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-  .show {display:grid;}
-  
-.mychart {
-    max-width: 300px;
-    max-height: 300px;
-    width: 300px;
-    height: 300px;
-    text-align: left;
+  --dark: #b2b1b3;
+  --light: #d0d0d0;
+  --purple: #8A6FC4;
+  --blue: #4C5CA2;
 }
-  
-  body {
-    font-family: Helvetica;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    justify-content: flex-start;
-    animation-name: blur;
-    animation-duration: 3s;
-    animation-direction: alternate;
-    animation-iteration-count: 1;
-    background-color: var(--light);
-    user-select: none;
-  }
-  
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--light);
+  color: #fff;
+}
+
+header {
+  background-color: var(--dark);
+  padding: 5px;
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+}
+h1 {
+  margin: 0;
+  font-size: 32px;
+  color: #fff;
+}
+.header-section {
+  display: flex;
+  align-items: center;
+  margin-right: 60px;
+}
+.header-section label {
+  margin-right: 10px;
+  color: #fff;
+}
+.header-logo {
+  margin-left: 20px;
+}
+
+#stock-input,
+#start-date-input,
+#end-date-input {
+  padding: 8px;
+  border-radius: 4px;
+  border: none;
+}
+#search-button {
+  padding: 8px 16px;
+  margin-left: 5px;
+  background-color: var(--blue);
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#search-button:hover {
+  background-color: var(--purple);
+}
+
+.main{
+  display: flex;
+  flex: 1;
+  padding: 10px;
+  margin: 10px;
+ 
+}
+
+#history-container {
+  flex: 1;
+  max-width: 500px;
+  margin: 20px;
+  padding: 20px;
+  background-color: #333;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+#chart-container {
+  flex: 1;
+  max-width: 800px;
+  margin: 20px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+#news-container {
+  flex: 1;
+  max-width: 800px;
+  margin: 20px;
+  padding: 20px;
+  background-color: #333;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+.news-article {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #666;
+}
+.news-article h2 {
+margin-top: 0;
+font-size: 24px;
+color: #fff;
+text-align: center;
+}
+.article-info {
+font-size: 14px;
+color: #ccc;
+margin-bottom: 10px;
+}
+
+.article-content {
+font-size: 16px;
+color: #fff;
+line-height: 1.5;
+}
+
+.news-box{
+  color: var(--blue);
+  background-color: var(--light);
+  padding: 10px;
+  margin: 10px;
+  border: var(--dark);
+  border-radius: 2px;
+}
+
+footer {
+text-align: center;
+padding: 10px;
+background-color: var(--purple);
+color: #fff;
+}
+
+@media screen and (max-width: 768px) {
   main {
-    display: flex;
-    flex-wrap: wrap;
-    flex-grow: 1;
-    
+    flex-direction: column;
   }
-  
-  @media screen and (max-width: 768px) {
-    main {
-      flex-direction: column;
-    }
-  }
-  
-  @media screen and (max-width: 768px) {
-      .profile-pic{
-        max-width: 70%;
-    }
-  }
+}
