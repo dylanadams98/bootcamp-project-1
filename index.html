@@ -1,47 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
+  <title>StockWizard - Stock Market News</title>
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
-    <title>Document</title>
 </head>
+
 <body>
-
-    <header>
-        <img class="logo" src="logo.png" alt="Logo" width="200" height="200">
-
-        <div class="dropdown">
-            <button onclick="myFunction()" class="dropbtn">Ticker</button>
-            <div id="myDropdown" class="dropdown-content">
-              <a href="#">Link 1</a>
-              <a href="#">Link 2</a>
-              <a href="#">Link 3</a>
-            </div>
-          </div>
-
-      </header>
+  <header>
+    <div class="header-section">
+      <img class="header-logo" src="logo.png" width="150px" height="150px">
+    </div>
+    <div class="header-section">
+      <label for="stock-input">Stock Name:</label>
+      <input type="text" id="stock-input" placeholder="Enter stock name...">
+    </div>
+    <div class="header-section">
+      <label for="start-date-input">Start Date:</label>
+      <input type="date" id="start-date-input">
+    </div>
+    <div class="header-section">
+      <label for="end-date-input">End Date:</label>
+      <input type="date" id="end-date-input">
+      <button id="search-button">Search</button>
+    </div>
+  </header>
+  <section id="main">
+    <section id="chart-container">
 
       <div>
         <canvas id="myChart"></canvas>
       </div>
-      
+
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-      
+
       <script>
-       
+
         const ctx = document.getElementById('myChart');
-      
+
         new Chart(ctx, {
-          
+
           type: 'line',
           data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: ['1st', '2nd', '3rd', '4th', '5th', '6th'],
             datasets: [{
-              label: '# of Votes',
+              label: 'Stock Price',
               data: [12, 19, 3, 5, 2, 3],
-              borderWidth: 1
+              borderWidth: 4
             }]
           },
           options: {
@@ -50,24 +58,25 @@
                 beginAtZero: true
               }
             }
-            
           }
-          
         });
       </script>
 
-      <aside class="news">
-<div>
-  <h1>News 1</h1>
-  <h1>News 2</h1>
-  <h1>News 3</h1>
-</div>
+    </section>
+    <section id="news-container">
+      <div class="news-article">
+        <h1>Ticker News</h1>
+        <ul>Stock News</ul>
+        <ul>Stock News</ul>
+        <ul>Stock News</ul>
 
+      </div>
+    </section>
 
-      </aside>
-       
-    
+  </section>
+  <footer>
+    <p>&copy; 2023 StockWizard</p>
+  </footer>
 </body>
-<script src="/polygon.js"></script>
-<script src="https://polygon.io/client-js"></script>
+
 </html>
