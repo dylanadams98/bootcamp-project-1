@@ -28,7 +28,24 @@
       <button id="search-button">Search</button>
     </div>
   </header>
-  <section id="main">
+  <section class="main">
+
+    <section id="history-container">
+      <div class="news-article">
+        <h2>Ticker History</h2>
+        <div class="news-box">
+          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
+        </div>
+        <div class="news-box">
+          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
+        </div>
+        <div class="news-box">
+          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
+        </div>
+
+      </div>
+    </section>
+
     <section id="chart-container">
 
       <div>
@@ -47,15 +64,20 @@
           data: {
             labels: ['1st', '2nd', '3rd', '4th', '5th', '6th'],
             datasets: [{
-              label: 'Stock Price',
-              data: [12, 19, 3, 5, 2, 3],
-              borderWidth: 4
+              label: 'close',
+              data: [12, 19, 3, 5, 10, 3],
+              borderWidth: 4,
+            },
+            {
+              label: 'open',
+              data: [30, 20, 4, 9, 20, 34],
+              borderWidth: 4,
             }]
           },
           options: {
             scales: {
               y: {
-                beginAtZero: true
+                beginAtZero: false
               }
             }
           }
@@ -65,10 +87,32 @@
     </section>
     <section id="news-container">
       <div class="news-article">
-        <h1>Ticker News</h1>
-        <ul>Stock News</ul>
-        <ul>Stock News</ul>
-        <ul>Stock News</ul>
+        <h2>Ticker News</h2>
+        <div class="news-box">
+          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
+        </div>
+        <div class="news-box">
+          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
+        </div>
+        <div class="news-box">
+          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="news-container">
+      <div class="news-article">
+        <h2>Ticker News</h2>
+        <div class="news-box">
+          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
+        </div>
+        <div class="news-box">
+          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
+        </div>
+        <div class="news-box">
+          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
+        </div>
 
       </div>
     </section>
