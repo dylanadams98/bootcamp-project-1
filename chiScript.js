@@ -9,41 +9,23 @@ async function getStockData(stocksTicker, from, to) {
   var response = await fetch(url);
   var data = await response.json();
 
-  /*for (var i = 0; i < data.results.length; i++) {
-    result = data.results[i];
-    stockData.push({
-      time: dayjs(result.t).format("YYYY-MM-DD"),
-      open: result.o,
-      close: result.c,
-    });
-  }*/
-
   return data.results;
 }
 
-function getStockInfo(stocksTicker) {
+async function getStockInfo(stocksTicker) {
   const APIKEY = "79G4QU6AaADL93J2chBjRQKru3lIvD8z";
   const TicketDetails = "https://api.polygon.io/v3/reference/tickers";
 
   var url = `${TicketDetails}/${stocksTicker}?apiKey=${APIKEY}`;
 
-  fetch(url)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      console.log(`Company name is ${data.results.name}`);
-      console.log(
-        `The link of logo is ${
-          data.results.branding.logo_url + `?apiKey=${APIKEY}`
-        }.`
-      );
-      console.log(
-        `The link of icon is ${
-          data.results.branding.icon_url + `?apiKey=${APIKEY}`
-        }.`
-      );
-    });
+  var response = await fetch(url);
+  var data = await response.json();
+
+  return {
+    companyName: data.results.name,
+    description: data.results.description,
+    logoURL: `${data.results.branding.logo_url}?apiKey=${APIKEY}`,
+  };
 }
 
 async function getNews(stocksTicker, from, to) {
@@ -54,19 +36,6 @@ async function getNews(stocksTicker, from, to) {
 
   var response = await fetch(url);
   var data = await response.json();
-
-  /*fetch(url)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      for (var i = 0; i < data.articles.length; i++) {
-        article = data.articles[i];
-        console.log(article.publishedAt);
-        console.log(`The title is ${article.title}.`);
-        console.log(`The author is ${article.author}.`);
-      }
-    });*/
 
   return data.articles;
 }
@@ -92,12 +61,24 @@ newsPanel.css("border-radius", "10pt");
 newsPanel.css("padding", "10pt");
 newsPanel.css("margin", "10pt");
 
-searchBtn.on("click", () => {
+searchBtn.on("click", async () => {
+  stockPanel.empty();
+  newsPanel.empty();
+
   var stockName = stockNameField.val();
   var startDate = startDateField.val();
   var endDate = endDateField.val();
 
+  var obj = await getStockInfo(stockName);
+  var logoURL = obj.logoURL;
+
   getStockData(stockName, startDate, endDate).then(function (stockData) {
+    var logoImg = $("<img>");
+    logoImg.attr("src", logoURL);
+    logoImg.css("height", "40px");
+    logoImg.css("width", "40px");
+    logoImg.appendTo(stockPanel);
+
     for (var i = 0; i < stockData.length; i++) {
       var stockDate = $("<p></p>");
       stockDate.text(`On ${dayjs(stockData[i].t).format("YYYY-MM-DD")},`);
@@ -112,6 +93,12 @@ searchBtn.on("click", () => {
   });
 
   getNews(stockName, startDate, endDate).then(function (newsData) {
+    var logoImg = $("<img>");
+    logoImg.attr("src", logoURL);
+    logoImg.css("height", "40px");
+    logoImg.css("width", "40px");
+    logoImg.appendTo(newsPanel);
+
     for (var i = 0; i < newsData.length; i++) {
       var newsDate = $("<p></p>");
       newsDate.text(`On ${newsData[i].publishedAt},`);
