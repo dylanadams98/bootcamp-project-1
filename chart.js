@@ -1,35 +1,50 @@
-// //this function can get news about a stock
-// async function getNews(stocksTicker, from, to) {
-//     const APIKEY = "3f365a6bc42242c98bd807aa869036d5";
-//     const Everything = "https://newsapi.org/v2/everything";
-  
-//     var url = `${Everything}?q=${stocksTicker}&from=${from}&to=${to}&sortBy=publishedAt&apiKey=${APIKEY}&pageSize=5&language=en`;
-//     //language=en means only get news in english, sortBy=publishedAt means sort by the publish date, pageSize=5 means only get 5 news
-  
-//     var response = await fetch(url);
-//     var data = await response.json();
-  
-//     return data.articles;
-//   }
+// HTML element where the chart will be rendered
+const chartContainer = document.getElementById('chartContainer');
 
-var ctx = document.getElementById("myChart").getContext('2d');
+// Function to fetch stock data
+async function getStockData(stocksTicker, from, to) {
+  const APIKEY = '79G4QU6AaADL93J2chBjRQKru3lIvD8z';
+  const apiUrl = `https://api.example.com/stocks?ticker=${stocksTicker}&from=${from}&to=${to}&apikey=${APIKEY}`;
 
-// messing with chart js
-var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ["Tokyo",	"Mumbai",	"Mexico City",	"Shanghai",	"Sao Paulo",	"New York",	"Karachi","Buenos Aires",	"Delhi","Moscow"],
+  try {
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+
+    
+    const labels = data.map(entry => entry.date);
+    const values = data.map(entry => entry.price);
+
+    // the chart
+    const chart = new Chart(chartContainer, {
+      type: 'line',
+      data: {
+        labels: labels,
         datasets: [{
-            label: '', 
-            data: [], 
-            fill: false,
-            borderColor: '#2196f3', // Add custom color border (Line)
-            backgroundColor: '#2196f3', // Add custom color background (Points and Fill)
-            borderWidth: 1 // Specify bar border width
-        }]},
-    options: {
-      responsive: true, // Instruct chart js to respond nicely.
-      maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height 
-    }
-});
-  
+          label: 'Stock Price',
+          data: values,
+          borderColor: 'blue',
+          fill: false
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            type: 'time',
+            time: {
+              unit: 'day'
+            }
+          },
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching stock data:', error);
+  }
+}
+
+getStockData('AAPL', '2023-01-01', '2023-05-01');
+
