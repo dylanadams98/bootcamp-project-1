@@ -1,15 +1,14 @@
-// HTML element where the chart will be rendered
 const chartContainer = document.getElementById('MyChart');
 
-// Function to fetch stock data
 async function getStockData(stocksTicker, from, to) {
   const APIKEY = '79G4QU6AaADL93J2chBjRQKru3lIvD8z';
-  const Aggregates = "https://api.polygon.io/v2/aggs/ticker";
+  const apiUrl = "https://api.polygon.io/v2/aggs/ticker";
 
   try {
     const response = await fetch(apiUrl);
     const data = await response.json();
 
+    const results = data. results;
     
     const labels = data.map(entry => entry.date);
     const values = data.map(entry => entry.price);
