@@ -1,72 +1,44 @@
+// to get the function to return something, i cannot use the fetch(url).then(response).then(data) approach,
+// instead, i have to use async + await, otherwise nothing will return.
+// basically, fetch(url) will return a promise that is yet to be fulfilled, and then await let you to wait for its fulfillment
 async function getStockData(stocksTicker, from, to) {
   const APIKEY = "79G4QU6AaADL93J2chBjRQKru3lIvD8z";
   const Aggregates = "https://api.polygon.io/v2/aggs/ticker";
   const multiplier = 1;
-  const timespan = "day";
+  const timespan = "day"; //set the unit time to be 1 day
 
   var url = `${Aggregates}/${stocksTicker}/range/${multiplier}/${timespan}/${from}/${to}?adjusted=true&sort=asc&limit=120&apiKey=${APIKEY}`;
 
   var response = await fetch(url);
   var data = await response.json();
 
-  /*for (var i = 0; i < data.results.length; i++) {
-    result = data.results[i];
-    stockData.push({
-      time: dayjs(result.t).format("YYYY-MM-DD"),
-      open: result.o,
-      close: result.c,
-    });
-  }*/
-
+  //study the structure of the response in https://polygon.io/docs/stocks/get_v2_aggs_ticker__stocksticker__range__multiplier___timespan___from___to
   return data.results;
 }
 
-function getStockInfo(stocksTicker) {
+//this function can get information of the stock, for example icon
+async function getStockInfo(stocksTicker) {
   const APIKEY = "79G4QU6AaADL93J2chBjRQKru3lIvD8z";
   const TicketDetails = "https://api.polygon.io/v3/reference/tickers";
 
   var url = `${TicketDetails}/${stocksTicker}?apiKey=${APIKEY}`;
 
-  fetch(url)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      console.log(`Company name is ${data.results.name}`);
-      console.log(
-        `The link of logo is ${
-          data.results.branding.logo_url + `?apiKey=${APIKEY}`
-        }.`
-      );
-      console.log(
-        `The link of icon is ${
-          data.results.branding.icon_url + `?apiKey=${APIKEY}`
-        }.`
-      );
-    });
+  var response = await fetch(url);
+  var data = await response.json();
+
+  return data.results.branding.logo_url + `?apiKey=${APIKEY}`;
 }
 
+//this function can get news about a stock
 async function getNews(stocksTicker, from, to) {
   const APIKEY = "3f365a6bc42242c98bd807aa869036d5";
   const Everything = "https://newsapi.org/v2/everything";
 
   var url = `${Everything}?q=${stocksTicker}&from=${from}&to=${to}&sortBy=publishedAt&apiKey=${APIKEY}&pageSize=5&language=en`;
+  //language=en means only get news in english, sortBy=publishedAt means sort by the publish date, pageSize=5 means only get 5 news
 
   var response = await fetch(url);
   var data = await response.json();
-
-  /*fetch(url)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      for (var i = 0; i < data.articles.length; i++) {
-        article = data.articles[i];
-        console.log(article.publishedAt);
-        console.log(`The title is ${article.title}.`);
-        console.log(`The author is ${article.author}.`);
-      }
-    });*/
 
   return data.articles;
 }
@@ -92,12 +64,22 @@ newsPanel.css("border-radius", "10pt");
 newsPanel.css("padding", "10pt");
 newsPanel.css("margin", "10pt");
 
-searchBtn.on("click", () => {
+searchBtn.on("click", async () => {
+  stockPanel.empty(); //might be there are other information on display, makes the panel empty by clicking each the button
+  newsPanel.empty();
+
   var stockName = stockNameField.val();
   var startDate = startDateField.val();
   var endDate = endDateField.val();
 
+  var logoURL = await getStockInfo(stockName);
+
   getStockData(stockName, startDate, endDate).then(function (stockData) {
+    var logoImg = $("<img>");
+    logoImg.attr("src", logoURL);
+    logoImg.css("height", "30px");
+    logoImg.appendTo(stockPanel);
+
     for (var i = 0; i < stockData.length; i++) {
       var stockDate = $("<p></p>");
       stockDate.text(`On ${dayjs(stockData[i].t).format("YYYY-MM-DD")},`);
@@ -112,6 +94,11 @@ searchBtn.on("click", () => {
   });
 
   getNews(stockName, startDate, endDate).then(function (newsData) {
+    var logoImg = $("<img>");
+    logoImg.attr("src", logoURL);
+    logoImg.css("height", "30px");
+    logoImg.appendTo(newsPanel);
+
     for (var i = 0; i < newsData.length; i++) {
       var newsDate = $("<p></p>");
       newsDate.text(`On ${newsData[i].publishedAt},`);
