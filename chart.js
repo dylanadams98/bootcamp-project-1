@@ -4,7 +4,7 @@ const chartContainer = document.getElementById('chartContainer');
 // Function to fetch stock data
 async function getStockData(stocksTicker, from, to) {
   const APIKEY = '79G4QU6AaADL93J2chBjRQKru3lIvD8z';
-  const apiUrl = `https://api.example.com/stocks?ticker=${stocksTicker}&from=${from}&to=${to}&apikey=${APIKEY}`;
+  const Aggregates = "https://api.polygon.io/v2/aggs/ticker";
 
   try {
     const response = await fetch(apiUrl);
