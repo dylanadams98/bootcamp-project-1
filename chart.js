@@ -1,5 +1,5 @@
 // HTML element where the chart will be rendered
-const chartContainer = document.getElementById('chartContainer');
+const chartContainer = document.getElementById('MyChart');
 
 // Function to fetch stock data
 async function getStockData(stocksTicker, from, to) {
