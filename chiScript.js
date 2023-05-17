@@ -7,6 +7,8 @@ async function getStockData(stocksTicker, from, to) {
   const multiplier = 1;
   const timespan = "day"; //set the unit time to be 1 day
 
+var= dayjs();
+
   var url = `${Aggregates}/${stocksTicker}/range/${multiplier}/${timespan}/${from}/${to}?adjusted=true&sort=asc&limit=120&apiKey=${APIKEY}`;
 
   var response = await fetch(url);
@@ -43,7 +45,7 @@ async function getNews(stocksTicker, from, to) {
   return data.articles;
 }
 
-const stockNameField = $("#stockName");
+const stockNameField = $("#stockInput");
 const startDateField = $("#startDate");
 const endDateField = $("#endDate");
 
@@ -73,14 +75,16 @@ searchBtn.on("click", async () => {
   var endDate = endDateField.val();
 
   var logoURL = await getStockInfo(stockName);
-
-  getStockData(stockName, startDate, endDate).then(function (stockData) {
+   name(params) {
+  
+ } getStockData(stockName, startDate, endDate).then(function (stockData) {
     var logoImg = $("<img>");
     logoImg.attr("src", logoURL);
     logoImg.css("height", "30px");
     logoImg.appendTo(stockPanel);
 
-    for (var i = 0; i < stockData.length; i++) {
+// for loop
+    // for (var i = 0; i < stockData.length; i++) {
       var stockDate = $("<p></p>");
       stockDate.text(`On ${dayjs(stockData[i].t).format("YYYY-MM-DD")},`);
       var stockOpen = $("<p></p>");
@@ -92,13 +96,15 @@ searchBtn.on("click", async () => {
       stockClose.appendTo(stockPanel);
     }
   });
-
+ seperate this into two different functions 
+ get rid of the .then function
   getNews(stockName, startDate, endDate).then(function (newsData) {
-    var logoImg = $("<img>");
-    logoImg.attr("src", logoURL);
-    logoImg.css("height", "30px");
-    logoImg.appendTo(newsPanel);
+ var logoImg = $("<img>");
+  logoImg.attr("src", logoURL);
+  logoImg.css("height", "30px");
+  logoImg.appendTo(newsPanel);
 
+  // for loop
     for (var i = 0; i < newsData.length; i++) {
       var newsDate = $("<p></p>");
       newsDate.text(`On ${newsData[i].publishedAt},`);
@@ -113,3 +119,5 @@ searchBtn.on("click", async () => {
     }
   });
 });
+
+// need to adjust variables in order to combine with HTML
