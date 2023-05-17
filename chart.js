@@ -20,8 +20,8 @@ var myChart = new Chart(ctx, {
     data: {
         labels: ["Tokyo",	"Mumbai",	"Mexico City",	"Shanghai",	"Sao Paulo",	"New York",	"Karachi","Buenos Aires",	"Delhi","Moscow"],
         datasets: [{
-            label: 'Series 1', // Name the series
-            data: [500,	50,	2424,	14040,	14141,	4111,	4544,	47,	5555, 6811], // Specify the data values array
+            label: '', 
+            data: [], 
             fill: false,
             borderColor: '#2196f3', // Add custom color border (Line)
             backgroundColor: '#2196f3', // Add custom color background (Points and Fill)
