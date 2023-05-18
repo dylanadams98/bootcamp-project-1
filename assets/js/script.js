@@ -27,14 +27,16 @@ async function DisplayStockData(stocksTicker, from, to) {
 
         datasets: [
           {
-            label: "close",
+            label: "Close",
             data: close,
-            borderWidth: 4,
+            borderWidth: 2,
+            borderColor: '#4C5CA2',
           },
           {
-            label: "open",
+            label: "Open",
             data: open,
-            borderWidth: 4,
+            borderWidth: 2,
+            borderColor: '#8A6FC4',
           },
         ],
       },
@@ -53,7 +55,23 @@ async function DisplayStockData(stocksTicker, from, to) {
   }
 }
 
+var newsPanel = $("#newsPanel");
+
+async function getNews(stocksTicker, from, to) {
+  const APIKEY = "3f365a6bc42242c98bd807aa869036d5";
+  const Everything = "https://newsapi.org/v2/everything";
+
+  var url = `${Everything}?q=${stocksTicker}&from=${from}&to=${to}&sortBy=publishedAt&apiKey=${APIKEY}&pageSize=5&language=en`;
+  //language=en means only get news in english, sortBy=publishedAt means sort by the publish date, pageSize=5 means only get 5 news
+
+  var response = await fetch(url);
+  var data = await response.json();
+
+  return data.articles;
+}
+
 searchBtn.addEventListener("click", async function () {
+  newsPanel.empty()
   chartContainer.removeChild(chartContainer.firstChild);
 
   var stockName = document.getElementById("stock-input").value;
@@ -61,4 +79,24 @@ searchBtn.addEventListener("click", async function () {
   var endDate = document.getElementById("end-date-input").value;
 
   DisplayStockData(stockName, startDate, endDate);
+
+
+  getNews(stockName, startDate, endDate).then(function (newsData) {
+
+    for (var i = 0; i < newsData.length; i++) {
+      var newsDate = $("<h3></h3>");
+      newsDate.text(`${newsData[i].publishedAt.slice(0, 10)}`);
+      var newsTitle = $("<p></p>");
+      newsTitle.text(`${newsData[i].title},`);
+      var newsURL = $("<a></a>");
+      newsURL.text(newsData[i].url);
+      newsURL.attr("href", newsData[i].url);
+      newsDate.appendTo(newsPanel);
+      newsTitle.appendTo(newsPanel);
+      newsURL.appendTo(newsPanel);
+
+    }
+    console.log(newsTitle)
+  });
+
 });
