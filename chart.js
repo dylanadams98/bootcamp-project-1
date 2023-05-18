@@ -3,16 +3,19 @@ const chartContainer = document.getElementById('MyChart');
 // API
 async function getStockData(stocksTicker, from, to) {
   const APIKEY = '79G4QU6AaADL93J2chBjRQKru3lIvD8z';
-  const apiUrl = "https://api.polygon.io/v2/aggs/ticker";
-
+  var url = ’${apiUrl}/${stocksTicker}/range/1/day/${from}/${to}?adjusted=true&sort=asc&limit=120&apiKey=${APIKEY}’;
+  
   try {
     const response = await fetch(apiUrl);
     const data = await response.json();
 
     const results = data. results;
 
-    const labels = data.map(entry => entry.date);
-    const values = data.map(entry => entry.price);
+    // const labels = data.map(entry => entry.date);
+    // const values = data.map(entry => entry.price);
+
+  const labels = results.map(entry => dayjs(entry.t).format(“M/D”));
+  const values = results.map(entry => entry.o);
 
     // the chart
     const chart = new Chart(chartContainer, {
