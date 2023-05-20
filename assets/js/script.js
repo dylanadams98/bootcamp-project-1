@@ -1,9 +1,9 @@
 const searchBtn = document.getElementById("search-button");
-
 var chartContainer = document.getElementById("myChart");
+var stockChart;
 
 async function DisplayStockData(stocksTicker, from, to) {
-  var stockChart = document.createElement("canvas");
+  stockChart = document.createElement("canvas");
 
   const APIKEY = "79G4QU6AaADL93J2chBjRQKru3lIvD8z";
   const Aggregates = "https://api.polygon.io/v2/aggs/ticker";
