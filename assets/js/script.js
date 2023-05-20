@@ -105,4 +105,12 @@ window.addEventListener("load", function() {
   var strdStockName = localStorage.getItem("stockName");
   var strdStartDate = localStorage.getItem("startDate");
   var strdEndDate = localStorage.getItem("endDate");
+
+  if (strdStockName && strdStartDate && strdEndDate){
+    document.getElementById("stock-input").value = strdStockName;
+    document.getElementById("start-date-input").value = strdStartDate;
+    document.getElementById("end-date-input").value = strdEndDate;
+
+    DisplayStockData(strdStockName, strdStartDate, strdEndDate);
+  }
 })
