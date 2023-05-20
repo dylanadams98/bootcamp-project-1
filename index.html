@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
   <title>StockWizard - Stock Market News</title>
@@ -16,7 +16,11 @@
     </div>
     <div class="header-section">
       <label for="stock-input">Stock Name:</label>
-      <input type="text" id="stock-input" placeholder="Enter stock name...">
+      <input type="text" id="stock-input" placeholder="Enter stock name..." onkeyup="
+      var start = this.selectionStart;
+      var end = this.selectionEnd;
+      this.value = this.value.toUpperCase();
+      this.setSelectionRange(start, end);">
     </div>
     <div class="header-section">
       <label for="start-date-input">Start Date:</label>
@@ -25,22 +29,25 @@
     <div class="header-section">
       <label for="end-date-input">End Date:</label>
       <input type="date" id="end-date-input">
+    </div>
+
+    <div class="header-section">
       <button id="search-button">Search</button>
     </div>
+
+    <div class="header-section">
+      <button id="clear-button">Clear</button>
+    </div>
+
   </header>
   <section class="main">
 
     <section id="history-container">
       <div class="news-article">
         <h2>Ticker History</h2>
-        <div class="news-box">
-          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
-        </div>
-        <div class="news-box">
-          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
-        </div>
-        <div class="news-box">
-          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
+        
+        <div>
+          <div id="historyPanel"></div>
         </div>
 
       </div>
@@ -57,34 +64,13 @@
     <section id="news-container">
       <div class="news-article">
         <h2>Ticker News</h2>
-        <div class="news-box">
-          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
-        </div>
-        <div class="news-box">
-          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia</p>
-        </div>
-        <div class="news-box">
-          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
+        <div>
+          <div id="newsPanel"></div>
         </div>
 
       </div>
     </section>
 
-    <section id="news-container">
-      <div class="news-article">
-        <h2>Ticker News</h2>
-        <div class="news-box">
-          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
-        </div>
-        <div class="news-box">
-          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
-        </div>
-        <div class="news-box">
-          <p>lorem ipsum aijsdjiasdijasd, asdj idjsij, aijsdajsdasdjia, aijsdisjdiajids</p>
-        </div>
-
-      </div>
-    </section>
 
   </section>
   <footer>

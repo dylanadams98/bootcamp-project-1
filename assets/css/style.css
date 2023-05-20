@@ -60,7 +60,23 @@ h1 {
   border-radius: 4px;
   cursor: pointer;
 }
+
 #search-button:hover {
+  background-color: var(--purple);
+}
+
+#clear-button {
+  padding: 8px 16px;
+  margin-left: 5px;
+  background-color: var(--blue);
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#clear-button:hover {
   background-color: var(--purple);
 }
 
