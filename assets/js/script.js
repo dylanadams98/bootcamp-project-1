@@ -84,7 +84,6 @@ searchBtn.addEventListener("click", async function () {
 
   DisplayStockData(stockName, startDate, endDate);
 
-
   getNews(stockName, startDate, endDate).then(function (newsData) {
 
     for (var i = 0; i < newsData.length; i++) {
@@ -98,9 +97,12 @@ searchBtn.addEventListener("click", async function () {
       newsDate.appendTo(newsPanel);
       newsTitle.appendTo(newsPanel);
       newsURL.appendTo(newsPanel);
-
     }
-    console.log(newsTitle)
   });
-
 });
+
+window.addEventListener("load", function() {
+  var strdStockName = localStorage.getItem("stockName");
+  var strdStartDate = localStorage.getItem("startDate");
+  var strdEndDate = localStorage.getItem("endDate");
+})
