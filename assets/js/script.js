@@ -112,5 +112,24 @@ window.addEventListener("load", function() {
     document.getElementById("end-date-input").value = strdEndDate;
 
     DisplayStockData(strdStockName, strdStartDate, strdEndDate);
+
+    getNews(strdStockName, strdStartDate, strdEndDate).then(function (newsData) {
+
+      for (var i = 0; i < newsData.length; i++) {
+        var newsDate = $("<h3></h3>");
+        newsDate.text(`${newsData[i].publishedAt.slice(0, 10)}`);
+        var newsTitle = $("<p></p>");
+        newsTitle.text(`${newsData[i].title},`);
+        var newsURL = $("<a></a>");
+        newsURL.text(newsData[i].url);
+        newsURL.attr("href", newsData[i].url);
+        newsDate.appendTo(newsPanel);
+        newsTitle.appendTo(newsPanel);
+        newsURL.appendTo(newsPanel);
+
+    }
+    console.log(newsTitle)
+  });
+
   }
-})
+});
