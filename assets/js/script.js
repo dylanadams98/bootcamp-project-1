@@ -78,6 +78,10 @@ searchBtn.addEventListener("click", async function () {
   var startDate = document.getElementById("start-date-input").value;
   var endDate = document.getElementById("end-date-input").value;
 
+  localStorage.setItem("stockName", stockName);
+  localStorage.setItem("startDate", startDate);
+  localStorage.setItem("endDate", endDate);
+
   DisplayStockData(stockName, startDate, endDate);
 
 
