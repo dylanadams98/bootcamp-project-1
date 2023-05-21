@@ -1,6 +1,7 @@
 const searchBtn = document.getElementById("search-button");
 var chartContainer = document.getElementById("myChart");
 var stockChart;
+var tickerHistory = [];
 
 async function DisplayStockData(stocksTicker, from, to) {
   stockChart = document.createElement("canvas");
