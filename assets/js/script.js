@@ -1,9 +1,10 @@
 const searchBtn = document.getElementById("search-button");
-
 var chartContainer = document.getElementById("myChart");
+var stockChart;
+var tickerHistory = [];
 
 async function DisplayStockData(stocksTicker, from, to) {
-  var stockChart = document.createElement("canvas");
+  stockChart = document.createElement("canvas");
 
   const APIKEY = "79G4QU6AaADL93J2chBjRQKru3lIvD8z";
   const Aggregates = "https://api.polygon.io/v2/aggs/ticker";
@@ -78,8 +79,11 @@ searchBtn.addEventListener("click", async function () {
   var startDate = document.getElementById("start-date-input").value;
   var endDate = document.getElementById("end-date-input").value;
 
-  DisplayStockData(stockName, startDate, endDate);
+  localStorage.setItem("stockName", stockName);
+  localStorage.setItem("startDate", startDate);
+  localStorage.setItem("endDate", endDate);
 
+  DisplayStockData(stockName, startDate, endDate);
 
   getNews(stockName, startDate, endDate).then(function (newsData) {
 
@@ -94,9 +98,61 @@ searchBtn.addEventListener("click", async function () {
       newsDate.appendTo(newsPanel);
       newsTitle.appendTo(newsPanel);
       newsURL.appendTo(newsPanel);
-
     }
-    console.log(newsTitle)
   });
 
+  if (!tickerHistory.includes(stockName)) {
+    tickerHistory.push(stockName);
+    updateTickerHistory();
+  }
 });
+
+window.addEventListener("DOMContentLoaded", function() {
+  var strdStockName = localStorage.getItem("stockName");
+  var strdStartDate = localStorage.getItem("startDate");
+  var strdEndDate = localStorage.getItem("endDate");
+
+  if (strdStockName && strdStartDate && strdEndDate){
+    document.getElementById("stock-input").value = strdStockName;
+    document.getElementById("start-date-input").value = strdStartDate;
+    document.getElementById("end-date-input").value = strdEndDate;
+
+    DisplayStockData(strdStockName, strdStartDate, strdEndDate);
+
+    getNews(strdStockName, strdStartDate, strdEndDate).then(function (newsData) {
+
+      for (var i = 0; i < newsData.length; i++) {
+        var newsDate = $("<h3></h3>");
+        newsDate.text(`${newsData[i].publishedAt.slice(0, 10)}`);
+        var newsTitle = $("<p></p>");
+        newsTitle.text(`${newsData[i].title},`);
+        var newsURL = $("<a></a>");
+        newsURL.text(newsData[i].url);
+        newsURL.attr("href", newsData[i].url);
+        newsDate.appendTo(newsPanel);
+        newsTitle.appendTo(newsPanel);
+        newsURL.appendTo(newsPanel);
+
+    }
+  });
+
+  if (!tickerHistory.includes(strdStockName)) {
+    tickerHistory.push(strdStockName);
+    updateTickerHistory();
+  }
+}
+});
+
+function updateTickerHistory() {
+  var historyContainer = document.getElementById("history-container");
+  historyContainer.innerHTML = "";
+
+  for (var i = tickerHistory.length - 1; i >= 0; i--) {
+    var historyBox = document.createElement("div");
+    historyBox.className = "history-box";
+    var tickerName = document.createElement("p");
+    tickerName.textContent = tickerHistory[i];
+    historyBox.appendChild(tickerName);
+    historyContainer.appendChild(historyBox);
+  }
+}
