@@ -134,6 +134,11 @@ window.addEventListener("DOMContentLoaded", function() {
   if (!tickerHistory.includes(strdStockName)) {
     tickerHistory.push(strdStockName);
     updateTickerHistory();
-
   }
+}
 });
+
+function updateTickerHistory() {
+  var historyContainer = document.getElementById("history-container");
+  historyContainer.innerHTML = "";
+}
