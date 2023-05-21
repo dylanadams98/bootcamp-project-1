@@ -100,6 +100,11 @@ searchBtn.addEventListener("click", async function () {
       newsURL.appendTo(newsPanel);
     }
   });
+
+  if (!tickerHistory.includes(stockName)) {
+    tickerHistory.push(stockName);
+    updateTickerHistory();
+  }
 });
 
 window.addEventListener("DOMContentLoaded", function() {
@@ -141,4 +146,13 @@ window.addEventListener("DOMContentLoaded", function() {
 function updateTickerHistory() {
   var historyContainer = document.getElementById("history-container");
   historyContainer.innerHTML = "";
+
+  for (var i = tickerHistory.length - 1; i >= 0; i--) {
+    var historyBox = document.createElement("div");
+    historyBox.className = "history-box";
+    var tickerName = document.createElement("p");
+    tickerName.textContent = tickerHistory[i];
+    historyBox.appendChild(tickerName);
+    historyContainer.appendChild(historyBox);
+  }
 }
