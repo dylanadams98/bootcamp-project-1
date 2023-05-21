@@ -167,7 +167,6 @@ clearBtn.addEventListener("click", function () {
 });
 
 searchBtn.addEventListener("click", async function () {
-  newsPanel.empty();
   stockSuccess = true;
   newsSuccess = true;
 

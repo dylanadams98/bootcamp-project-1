@@ -90,12 +90,11 @@ h1 {
 
 #history-container {
   flex: 1;
-  max-width: 200px;
+  max-width: 500px;
   margin: 20px;
   padding: 20px;
   background-color: #333;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-  border-radius: 5px;
 }
 
 #chart-container {
@@ -104,12 +103,6 @@ h1 {
   margin: 20px;
   padding: 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-  background: var(--dark);
-  position: relative;
-  height: 40vh;
-  border-radius: 5px;
-  
-  
 }
 
 #news-container {
@@ -119,7 +112,6 @@ h1 {
   padding: 20px;
   background-color: #333;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-  border-radius: 5px;
 }
 .news-article {
   margin-bottom: 20px;
@@ -144,23 +136,7 @@ color: #fff;
 line-height: 1.5;
 }
 
-h3{
-  font-size: small;
-  padding: 5px;
-  text-align: right;
-}
-
-.history-box{
-  color: var(--blue);
-  background-color: var(--light);
-  padding: 10px;
-  margin: 10px;
-  border: var(--dark);
-  border-radius: 5px;
-  text-align: center;
-}
-
-.history-box{
+.news-box{
   color: var(--blue);
   background-color: var(--light);
   padding: 10px;
@@ -189,13 +165,4 @@ color: #fff;
   main {
     flex-direction: column;
   }
-}
-
-#newsPanel{
-  background-color: var(--blue);
-  border-radius: 5px;
-  padding: 10px;
-  margin: 5px;
-  min-height: 60vh;
-
 }
