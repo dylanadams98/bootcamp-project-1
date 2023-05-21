@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
   <title>StockWizard - Stock Market News</title>
@@ -20,6 +20,10 @@
       var start = this.selectionStart;
       var end = this.selectionEnd;
       this.value = this.value.toUpperCase();
+      this.setSelectionRange(start, end);" onkeyup="
+      var start = this.selectionStart;
+      var end = this.selectionEnd;
+      this.value = this.value.toUpperCase();
       this.setSelectionRange(start, end);">
     </div>
     <div class="header-section">
@@ -32,7 +36,15 @@
     </div>
 
     <div class="header-section">
+    </div>
+
+    <div class="header-section">
       <button id="search-button">Search</button>
+    </div>
+
+
+    <div class="header-section">
+      <button id="clear-button">Clear</button>
     </div>
 
   </header>
@@ -41,14 +53,9 @@
     <section id="history-container">
       <div class="news-article">
         <h2>Ticker History</h2>
-        <div class="history-box">
-          <p>GME</p>
-        </div>
-        <div class="history-box">
-          <p>AAPL</p>
-        </div>
-        <div class="history-box">
-          <p>NIKE</p>
+        
+        <div>
+          <div id="historyPanel"></div>
         </div>
 
       </div>
@@ -65,7 +72,7 @@
     <section id="news-container">
       <div class="news-article">
         <h2>Ticker News</h2>
-        <div class="news-box">
+        <div>
           <div id="newsPanel"></div>
         </div>
 
