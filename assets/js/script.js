@@ -102,7 +102,7 @@ searchBtn.addEventListener("click", async function () {
   });
 });
 
-window.addEventListener("load", function() {
+window.addEventListener("DOMContentLoaded", function() {
   var strdStockName = localStorage.getItem("stockName");
   var strdStartDate = localStorage.getItem("startDate");
   var strdEndDate = localStorage.getItem("endDate");
@@ -129,8 +129,11 @@ window.addEventListener("load", function() {
         newsURL.appendTo(newsPanel);
 
     }
-    console.log(newsTitle)
   });
+
+  if (!tickerHistory.includes(strdStockName)) {
+    tickerHistory.push(strdStockName);
+    updateTickerHistory();
 
   }
 });
