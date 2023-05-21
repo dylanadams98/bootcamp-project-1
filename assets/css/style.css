@@ -145,6 +145,15 @@ line-height: 1.5;
   border-radius: 2px;
 }
 
+.history-box{
+  color: var(--blue);
+  background-color: var(--light);
+  padding: 10px;
+  margin: 10px;
+  border: var(--dark);
+  border-radius: 2px;
+}
+
 footer {
 text-align: center;
 padding: 10px;
