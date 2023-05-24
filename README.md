@@ -2,6 +2,8 @@
 
 The challenge of this project was to work collaboratively with other developers to create a project that solves a real-world problem. The project did it have a user story or an acceptance criterion. The project needed to fulfil the following requirements: use CSS, be interactive, use at least two server-side API’s, client storage, does not use alerts, be responsive, have a polished UI, have a clean repository.
 
+[Link to the project](https://dylanadams98.github.io/bootcamp-project-1/)
+
 # Technologies used
 
 The following technologies were used within the code to achieve the desired website:
@@ -20,16 +22,32 @@ For the project, the two API’s that were used are Polygon which is a stock mar
 
 ## Polygon.io - Stock Market Data APIs
 
-![ScreenShot of Polygon API](./assets/screenshots/PolygonAPI.png)
 Free stock data APIs. Real time and historical data, unlimited usage, tick level and aggregate granularity, in standardized JSON and CSV formats. Plus currencies data, including forex, crypto, and more.
 [Link of polygon API](https://polygon.io)
 
 ## News APINews API
 
-![ScreenShot of News API](./assets/screenshots/newsAPI.png)
 News API – Search News and Blog Articles on the Web
 Get JSON search results for global news articles in real-time with our free News API.
 [Link of News API](https://newsapi.org/)
+
+# Components of the web page
+
+## Header
+
+It contains three input fields. One for inputting the code of stock, the other twos for selecting the start and end dates of a period. Also a search button to click to make query.
+
+## Chart container
+
+It shows a chart to visualize the trend of stock price data drawn from Polygon API
+
+## News Container
+
+It shows news relating to the stock, drawn from the News API
+
+## History Container
+
+It saves the search history of users. Each history is a button. By clicking each button, the chart and news of the stock will be shown.
 
 # ScreenShots
 
