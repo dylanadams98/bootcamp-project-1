@@ -160,7 +160,7 @@ function updateTickerHistory(tickerHistory) {
     });
 
     historyPanel.appendChild(historyBox);
-    historyPanel.setAttribute("style", "height: 80vh; overflow: auto;");
+    historyPanel.setAttribute("style", "overflow: auto;");
   }
 }
 

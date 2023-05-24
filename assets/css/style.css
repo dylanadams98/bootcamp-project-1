@@ -82,6 +82,7 @@ button {
   font-weight: bold;
   border-radius: 4px;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 #clear-button:hover {
@@ -111,7 +112,7 @@ button {
   border-radius: 5px;
   text-align: center;
   align-self: auto;
-  min-height: 90.5vh;
+  
 
 
 }
@@ -124,6 +125,7 @@ button {
 #historyPanel {
   text-align: center;
   justify-content: center;
+  
 }
 
 .chartContainer{
@@ -211,10 +213,24 @@ footer {
   }
 }
 
+
+
 @media screen and (max-width: 1050px) {
   .header-section {
     padding: 5px;
     justify-content: center;
     margin-bottom: 5px;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .chartContainer {
+    height: 93vh;
+  }
+}
+
+@media screen and (min-width: 1050px) {
+  #historyPanel {
+    min-height: 81vh;
   }
 }
