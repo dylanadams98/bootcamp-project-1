@@ -88,21 +88,28 @@ async function DisplayStockData(stocksTicker, from, to) {
   }
 }
 
+/*
 async function getNews(stocksTicker, from, to) {
-  const endPoint = "https://api.currentsapi.services/v1/search";
-  const APIKEY = "Bl7H_isDAqa7Ic0-xjm-jWD1Il0MzhU0p_uBnYWWnmoOcvUO";
+  const APIKEY = "05LLiT2dxd9ILhYVOHPXn7BBAG2W8-dwR9P7I70AyKU";
+  const newsCatcher = "https://api.newscatcherapi.com/v2/search";
 
-  var url = `${endPoint}?apiKey=${APIKEY}&language=en&start_date=${from}&end_date=${to}&keywords=${
-    "(NYSE:" + stocksTicker + ")"
-  }`;
+  var fromDate = dayjs(from).format("YYYY/MM/DD");
+  var toDate = dayjs(to).format("YYYY/MM/DD");
 
-  var response = await fetch(url);
+  var url = `${newsCatcher}?q=${stocksTicker}&from_rank=${fromDate}&to_rank=${toDate}&lang=en&sort_by=date&page=1&page_size=100&topic=finance`;
+
+  var response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "x-api-key": APIKEY,
+    },
+  });
+
   var data = await response.json();
 
-  return data.news;
-}
+  return data.articles;
+}*/
 
-/*
 async function getNews(stocksTicker, from, to) {
   const APIKEY = "3f365a6bc42242c98bd807aa869036d5";
   const Everything = "https://newsapi.org/v2/everything";
@@ -113,7 +120,7 @@ async function getNews(stocksTicker, from, to) {
   var data = await response.json();
 
   return data.articles;
-}*/
+}
 
 async function DisplayNews(stocksTicker, from, to) {
   while (newsPanel.firstChild) {
@@ -127,7 +134,7 @@ async function DisplayNews(stocksTicker, from, to) {
       var index = [];
 
       for (var i = 0; i < newsData.length; i++) {
-        var date = newsData[i].published.slice(0, 10);
+        var date = newsData[i].publishedAt.slice(0, 10);
         if (!dates.includes(date)) {
           dates.push(date);
           index.push(i);
@@ -140,7 +147,7 @@ async function DisplayNews(stocksTicker, from, to) {
 
         if (index.includes(i)) {
           var newsDate = document.createElement("h3");
-          newsDate.textContent = `${newsData[i].published.slice(0, 10)}`;
+          newsDate.textContent = `${newsData[i].publishedAt.slice(0, 10)}`;
           newsPanel.appendChild(newsDate);
         }
 
