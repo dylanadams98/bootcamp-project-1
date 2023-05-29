@@ -2,7 +2,7 @@
 
 The challenge of this project was to work collaboratively with other developers to create a project that solves a real-world problem. The project did it have a user story or an acceptance criterion. The project needed to fulfil the following requirements: use CSS, be interactive, use at least two server-side API’s, client storage, does not use alerts, be responsive, have a polished UI, have a clean repository.
 
-[Link to the project](https://dylanadams98.github.io/bootcamp-project-1/)
+[Link to the project](https://dylanadams98.github.io/stock-wizard/)
 
 # Technologies used
 
