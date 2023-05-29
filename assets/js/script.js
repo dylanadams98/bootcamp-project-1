@@ -234,6 +234,22 @@ clearBtn.addEventListener("click", function () {
   updateTickerHistory([]);
 });
 
+function errorWithoutInput() {
+  while (chartContainer.firstChild) {
+    chartContainer.removeChild(chartContainer.firstChild);
+  }
+
+  while (newsPanel.firstChild) {
+    newsPanel.removeChild(newsPanel.firstChild);
+  }
+
+  var errorMsg = document.createElement("h1");
+  errorMsg.textContent =
+    "Check if you have entered the name of the stock and selected the start date and end date.";
+
+  chartContainer.appendChild(errorMsg);
+}
+
 searchBtn.addEventListener("click", async function () {
   stockSuccess = true;
   newsSuccess = true;
@@ -247,13 +263,17 @@ searchBtn.addEventListener("click", async function () {
   var startDate = document.getElementById("start-date-input").value;
   var endDate = document.getElementById("end-date-input").value;
 
-  await DisplayStockData(stockName, startDate, endDate);
-  await DisplayNews(stockName, startDate, endDate);
+  if (stockName && startDate && endDate) {
+    await DisplayStockData(stockName, startDate, endDate);
+    await DisplayNews(stockName, startDate, endDate);
 
-  if (stockSuccess && newsSuccess && !tickerHistory.includes(stockName)) {
-    tickerHistory.push(stockName);
-    localStorage.setItem("tickerHistory", JSON.stringify(tickerHistory));
-    updateTickerHistory(tickerHistory);
+    if (stockSuccess && newsSuccess && !tickerHistory.includes(stockName)) {
+      tickerHistory.push(stockName);
+      localStorage.setItem("tickerHistory", JSON.stringify(tickerHistory));
+      updateTickerHistory(tickerHistory);
+    }
+  } else {
+    errorWithoutInput();
   }
 });
 
