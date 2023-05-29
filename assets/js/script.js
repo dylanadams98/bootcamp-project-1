@@ -63,23 +63,24 @@ async function DisplayStockData(stocksTicker, from, to) {
 
   try {
     const data = await getStockData(stocksTicker, from, to);
+    if (data.length > 1) {
+      const labels = data.map((entry) => dayjs(entry.t).format("M/D"));
+      const open = data.map((entry) => entry.o);
+      const close = data.map((entry) => entry.c);
 
-    const labels = data.map((entry) => dayjs(entry.t).format("M/D"));
-    const open = data.map((entry) => entry.o);
-    const close = data.map((entry) => entry.c);
+      var chartTitle = document.createElement("h2");
+      chartTitle.textContent = `${stocksTicker} (${from} to ${to})`;
 
-    var chartTitle = document.createElement("h2");
-    chartTitle.textContent = `${stocksTicker} (${from} to ${to})`;
+      chartContainer.appendChild(chartTitle);
+      CreateChart(labels, close, open);
 
-    /*var stockIcon = document.createElement("img");
-    stockIcon.setAttribute("src", iconURL);
-    stockIcon.setAttribute("style", "height: 30px; margin-bottom: 20px");*/
-
-    chartContainer.appendChild(chartTitle);
-    //chartContainer.appendChild(stockIcon);
-    CreateChart(labels, close, open);
-
-    stockSuccess = true;
+      stockSuccess = true;
+    } else {
+      var errorMsg = document.createElement("h1");
+      errorMsg.textContent = "Error fetching stock : chart cannot be created";
+      chartContainer.appendChild(errorMsg);
+      stockSuccess = false;
+    }
   } catch (error) {
     var errorMsg = document.createElement("h1");
     errorMsg.textContent = `Error fetching stock : ${error}`;
@@ -87,28 +88,6 @@ async function DisplayStockData(stocksTicker, from, to) {
     stockSuccess = false;
   }
 }
-
-/*
-async function getNews(stocksTicker, from, to) {
-  const APIKEY = "05LLiT2dxd9ILhYVOHPXn7BBAG2W8-dwR9P7I70AyKU";
-  const newsCatcher = "https://api.newscatcherapi.com/v2/search";
-
-  var fromDate = dayjs(from).format("YYYY/MM/DD");
-  var toDate = dayjs(to).format("YYYY/MM/DD");
-
-  var url = `${newsCatcher}?q=${stocksTicker}&from_rank=${fromDate}&to_rank=${toDate}&lang=en&sort_by=date&page=1&page_size=100&topic=finance`;
-
-  var response = await fetch(url, {
-    method: "GET",
-    headers: {
-      "x-api-key": APIKEY,
-    },
-  });
-
-  var data = await response.json();
-
-  return data.articles;
-}*/
 
 async function getNews(stocksTicker, from, to) {
   const APIKEY = "3f365a6bc42242c98bd807aa869036d5";
@@ -218,7 +197,6 @@ function updateTickerHistory(tickerHistory) {
 
       const startDate = dayjs().subtract(14, "day").format("YYYY-MM-DD");
       const endDate = dayjs().format("YYYY-MM-DD");
-      //var stockInfo = await getStockInfo(stockName);
 
       await DisplayStockData(stockName, startDate, endDate);
       await DisplayNews(stockName, startDate, endDate);
@@ -263,6 +241,10 @@ searchBtn.addEventListener("click", async function () {
   var startDate = document.getElementById("start-date-input").value;
   var endDate = document.getElementById("end-date-input").value;
 
+  document.getElementById("stock-input").value = "";
+  document.getElementById("start-date-input").value = "";
+  document.getElementById("end-date-input").value = "";
+
   if (stockName && startDate && endDate) {
     await DisplayStockData(stockName, startDate, endDate);
     await DisplayNews(stockName, startDate, endDate);
@@ -291,12 +273,6 @@ window.addEventListener("DOMContentLoaded", async function () {
     const startDate = dayjs().subtract(14, "day").format("YYYY-MM-DD");
     const endDate = dayjs().format("YYYY-MM-DD");
 
-    document.getElementById("stock-input").value = stockName;
-    document.getElementById("start-date-input").value = startDate;
-    document.getElementById("end-date-input").value = endDate;
-
-    //var stockInfo = await getStockInfo(stockName);
-
     await DisplayStockData(stockName, startDate, endDate);
     await DisplayNews(stockName, startDate, endDate);
 
@@ -304,8 +280,6 @@ window.addEventListener("DOMContentLoaded", async function () {
   } else {
     const startDate = dayjs().subtract(14, "day").format("YYYY-MM-DD");
     const endDate = dayjs().format("YYYY-MM-DD");
-
-    //var stockInfo = await getStockInfo("AAPL");
 
     await DisplayStockData("AAPL", startDate, endDate);
     await DisplayNews("AAPL", startDate, endDate);
