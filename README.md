@@ -65,3 +65,7 @@ Handling error of Polygon API:
 
 Handling error of News API:
 ![StockWizard webpage handle error from News](./assets/screenshots/ErrorHandlingNews.png)
+
+# Presentation
+
+[Link to the presentation](./assets/presentation/StockWizardHQ.pptx)
