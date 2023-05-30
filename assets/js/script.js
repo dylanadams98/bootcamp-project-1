@@ -8,24 +8,24 @@ var historyPanel = document.getElementById("historyPanel");
 var stockSuccess = true;
 var newsSuccess = true;
 
-function CreateChart(dates, data1, label1, data2, label2) {
+function CreateChart(labels, close, open) {
   var stockChart = document.createElement("canvas");
 
   new Chart(stockChart, {
     type: "line",
     data: {
-      labels: dates,
+      labels: labels,
 
       datasets: [
         {
-          label: label1,
-          data: data1,
+          label: "Close",
+          data: close,
           borderWidth: 2,
           borderColor: "#4C5CA2",
         },
         {
-          label: label2,
-          data: data2,
+          label: "Open",
+          data: open,
           borderWidth: 2,
           borderColor: "#8A6FC4",
         },
@@ -56,64 +56,6 @@ async function getStockData(stocksTicker, from, to) {
   return data.results;
 }
 
-async function createCompareCharts(stock, compare, from, to) {
-  while (chartContainer.firstChild) {
-    chartContainer.removeChild(chartContainer.firstChild);
-  }
-
-  try {
-    const stockData = await getStockData(stock, from, to);
-    const compareData = await getStockData(compare, from, to);
-
-    const dates = stockData.map((data) => dayjs(data.t).format("M/D"));
-
-    const stockClose = stockData.map((data) => data.c);
-    const compareClose = compareData.map((data) => data.c);
-
-    var chartTitle = document.createElement("h2");
-    chartTitle.textContent = `${stock} vs ${compare} (${from} to ${to})`;
-
-    chartContainer.appendChild(chartTitle);
-
-    CreateChart(dates, stockClose, stock, compareClose, compare);
-
-    createComparePanel(stock, from, to);
-  } catch (error) {
-    var errorMsg = document.createElement("h1");
-    errorMsg.textContent = "Error fetching stock : chart cannot be created";
-    chartContainer.appendChild(errorMsg);
-  }
-}
-
-function createComparePanel(stocksTicker, from, to) {
-  var comparePanel = document.createElement("div");
-  comparePanel.setAttribute("id", "comparePanel");
-  comparePanel.setAttribute("style", "margin-top: 40px;");
-  chartContainer.appendChild(comparePanel);
-
-  var compareLabel = document.createElement("label");
-  compareLabel.setAttribute("for", "compare-stock");
-  compareLabel.textContent = `Compare ${stocksTicker} with `;
-  comparePanel.appendChild(compareLabel);
-
-  var compareStock = document.createElement("input");
-  compareStock.setAttribute("id", "compare-stock");
-  compareStock.setAttribute("placeholder", "Enter stock name...");
-  comparePanel.appendChild(compareStock);
-
-  var compareBtn = document.createElement("button");
-  compareBtn.setAttribute("id", "compare-button");
-  compareBtn.textContent = "Compare";
-  comparePanel.appendChild(compareBtn);
-
-  compareBtn.addEventListener("click", () => {
-    if (compareStock.value) {
-      const compareTicker = compareStock.value;
-      createCompareCharts(stocksTicker, compareTicker, from, to);
-    }
-  });
-}
-
 async function DisplayStockData(stocksTicker, from, to) {
   while (chartContainer.firstChild) {
     chartContainer.removeChild(chartContainer.firstChild);
@@ -121,26 +63,23 @@ async function DisplayStockData(stocksTicker, from, to) {
 
   try {
     const data = await getStockData(stocksTicker, from, to);
-    if (data.length > 1) {
-      const dates = data.map((entry) => dayjs(entry.t).format("M/D"));
-      const open = data.map((entry) => entry.o);
-      const close = data.map((entry) => entry.c);
 
-      var chartTitle = document.createElement("h2");
-      chartTitle.textContent = `${stocksTicker} (${from} to ${to})`;
+    const labels = data.map((entry) => dayjs(entry.t).format("M/D"));
+    const open = data.map((entry) => entry.o);
+    const close = data.map((entry) => entry.c);
 
-      chartContainer.appendChild(chartTitle);
-      CreateChart(dates, close, "close price", open, "open price");
+    var chartTitle = document.createElement("h2");
+    chartTitle.textContent = `${stocksTicker} (${from} to ${to})`;
 
-      stockSuccess = true;
+    /*var stockIcon = document.createElement("img");
+    stockIcon.setAttribute("src", iconURL);
+    stockIcon.setAttribute("style", "height: 30px; margin-bottom: 20px");*/
 
-      createComparePanel(stocksTicker, from, to);
-    } else {
-      var errorMsg = document.createElement("h1");
-      errorMsg.textContent = "Error fetching stock : chart cannot be created";
-      chartContainer.appendChild(errorMsg);
-      stockSuccess = false;
-    }
+    chartContainer.appendChild(chartTitle);
+    //chartContainer.appendChild(stockIcon);
+    CreateChart(labels, close, open);
+
+    stockSuccess = true;
   } catch (error) {
     var errorMsg = document.createElement("h1");
     errorMsg.textContent = `Error fetching stock : ${error}`;
@@ -148,6 +87,28 @@ async function DisplayStockData(stocksTicker, from, to) {
     stockSuccess = false;
   }
 }
+
+/*
+async function getNews(stocksTicker, from, to) {
+  const APIKEY = "05LLiT2dxd9ILhYVOHPXn7BBAG2W8-dwR9P7I70AyKU";
+  const newsCatcher = "https://api.newscatcherapi.com/v2/search";
+
+  var fromDate = dayjs(from).format("YYYY/MM/DD");
+  var toDate = dayjs(to).format("YYYY/MM/DD");
+
+  var url = `${newsCatcher}?q=${stocksTicker}&from_rank=${fromDate}&to_rank=${toDate}&lang=en&sort_by=date&page=1&page_size=100&topic=finance`;
+
+  var response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "x-api-key": APIKEY,
+    },
+  });
+
+  var data = await response.json();
+
+  return data.articles;
+}*/
 
 async function getNews(stocksTicker, from, to) {
   const APIKEY = "3f365a6bc42242c98bd807aa869036d5";
@@ -257,6 +218,7 @@ function updateTickerHistory(tickerHistory) {
 
       const startDate = dayjs().subtract(14, "day").format("YYYY-MM-DD");
       const endDate = dayjs().format("YYYY-MM-DD");
+      //var stockInfo = await getStockInfo(stockName);
 
       await DisplayStockData(stockName, startDate, endDate);
       await DisplayNews(stockName, startDate, endDate);
@@ -272,22 +234,6 @@ clearBtn.addEventListener("click", function () {
   updateTickerHistory([]);
 });
 
-function errorWithoutInput() {
-  while (chartContainer.firstChild) {
-    chartContainer.removeChild(chartContainer.firstChild);
-  }
-
-  while (newsPanel.firstChild) {
-    newsPanel.removeChild(newsPanel.firstChild);
-  }
-
-  var errorMsg = document.createElement("h1");
-  errorMsg.textContent =
-    "Check if you have entered the name of the stock and selected the start date and end date.";
-
-  chartContainer.appendChild(errorMsg);
-}
-
 searchBtn.addEventListener("click", async function () {
   stockSuccess = true;
   newsSuccess = true;
@@ -301,21 +247,13 @@ searchBtn.addEventListener("click", async function () {
   var startDate = document.getElementById("start-date-input").value;
   var endDate = document.getElementById("end-date-input").value;
 
-  document.getElementById("stock-input").value = "";
-  document.getElementById("start-date-input").value = "";
-  document.getElementById("end-date-input").value = "";
+  await DisplayStockData(stockName, startDate, endDate);
+  await DisplayNews(stockName, startDate, endDate);
 
-  if (stockName && startDate && endDate) {
-    await DisplayStockData(stockName, startDate, endDate);
-    await DisplayNews(stockName, startDate, endDate);
-
-    if (stockSuccess && newsSuccess && !tickerHistory.includes(stockName)) {
-      tickerHistory.push(stockName);
-      localStorage.setItem("tickerHistory", JSON.stringify(tickerHistory));
-      updateTickerHistory(tickerHistory);
-    }
-  } else {
-    errorWithoutInput();
+  if (stockSuccess && newsSuccess && !tickerHistory.includes(stockName)) {
+    tickerHistory.push(stockName);
+    localStorage.setItem("tickerHistory", JSON.stringify(tickerHistory));
+    updateTickerHistory(tickerHistory);
   }
 });
 
@@ -333,6 +271,12 @@ window.addEventListener("DOMContentLoaded", async function () {
     const startDate = dayjs().subtract(14, "day").format("YYYY-MM-DD");
     const endDate = dayjs().format("YYYY-MM-DD");
 
+    document.getElementById("stock-input").value = stockName;
+    document.getElementById("start-date-input").value = startDate;
+    document.getElementById("end-date-input").value = endDate;
+
+    //var stockInfo = await getStockInfo(stockName);
+
     await DisplayStockData(stockName, startDate, endDate);
     await DisplayNews(stockName, startDate, endDate);
 
@@ -340,6 +284,8 @@ window.addEventListener("DOMContentLoaded", async function () {
   } else {
     const startDate = dayjs().subtract(14, "day").format("YYYY-MM-DD");
     const endDate = dayjs().format("YYYY-MM-DD");
+
+    //var stockInfo = await getStockInfo("AAPL");
 
     await DisplayStockData("AAPL", startDate, endDate);
     await DisplayNews("AAPL", startDate, endDate);
